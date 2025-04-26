@@ -26,7 +26,7 @@ gradcam_families = sorted(gradcam_meta['family'].unique())
 
 # ----------- TOP RIGHT BAR PLOT ----------------
 # Load CSV
-CSV_URL = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/Data/cross_validation_metrics.csv'
+CSV_URL = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/cross_validation_metrics.csv'
 df = pd.read_csv(CSV_URL)
 
 # Melt data
@@ -90,7 +90,7 @@ right_plot_1 = html.Div([
 
 # ---------- CONFUSION MATRIX --------------
 # Load confusion matrix data from GitHub
-conf_json_url = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/Data/seg1_ensemble_metrics.json'
+conf_json_url = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/seg1_ensemble_metrics.json'
 conf_data = requests.get(conf_json_url).json()
 conf_matrix = conf_data["confusion_matrix"]
 
@@ -122,8 +122,8 @@ conf_matrix = dcc.Graph(
 )
 
 # ------ TABLES ----------------
-VARIANCE_CSV = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/Data/segment_variance_data_cleaned.csv'
-PREDICTION_CSV = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/Data/sample_level_predictions_rounded.csv'
+VARIANCE_CSV = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/segment_variance_data_cleaned.csv'
+PREDICTION_CSV = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/sample_level_predictions_rounded.csv'
 
 variance_df = pd.read_csv(VARIANCE_CSV)
 prediction_df = pd.read_csv(PREDICTION_CSV)
@@ -188,7 +188,7 @@ def create_family_variance_and_selection_plots():
 
 
 def load_mcnemar_summary():
-    url = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/Data/mcnemar_comparison_results.json'
+    url = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/mcnemar_comparison_results.json'
     r = requests.get(url)
     try:
         mcnemar_data = r.json()
@@ -368,7 +368,7 @@ layout = html.Div([
 
     html.Div([
         html.Img(
-            src="https://github.com/nicolenadine/SeniorProject/blob/main/Data/calibration_curves.png?raw=true",
+            src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/calibration_curves.png?raw=true",
             style={'width': '100%', 'height': '500px'},
             alt="Benign probability distribution comparison")
         ]),
@@ -405,12 +405,12 @@ layout = html.Div([
     html.Div([
         dbc.Row([
             dbc.Col(html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/Data/benign_probability_distribution.png?raw=true",
+                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/benign_probability_distribution.png?raw=true",
                 style={'width': '100%', 'height': '500px'},
                 alt="Benign probability distribution comparison"
             ), xs=12, md=6),
             dbc.Col(html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/Data/malware_probability_distribution.png?raw=true",
+                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/malware_probability_distribution.png?raw=true",
                 style={'width': '100%', 'height': '500px'},
                 alt="Malware probability distribution comparison"
             ), xs=12, md=6),

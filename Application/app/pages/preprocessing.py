@@ -20,12 +20,12 @@ scatter_plot = dcc.Graph(
 
 # Placeholder image
 tsne_image = html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/Data/opcode_embeddings_tsne.png?raw=true",
+                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/opcode_embeddings_tsne.png?raw=true",
                 style={'width': '100%', 'height': '700px', "padding-left":
                        "20px", "padding-top": "25px"},
                 alt="Benign file count by source")
 sample_image = html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/Data/sample_images.png?raw=true",
+                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/sample_images.png?raw=true",
                 style={'width': '100%', 'height': '375px', "padding-left":
                        "20px", "padding-top": "25px"},
                 alt="Benign file count by source")
