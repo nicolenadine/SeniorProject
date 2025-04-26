@@ -1,0 +1,24 @@
+{
+    "accuracy": 0.4414735591206179,
+    "precision": 0.4414735591206179,
+    "recall": 1.0,
+    "f1_score": 0.6125309150865622,
+    "roc_auc": 0.5104027662438074,
+    "avg_precision": 0.4467536893466523,
+    "confusion_matrix": [
+        [
+            0,
+            940
+        ],
+        [
+            0,
+            743
+        ]
+    ],
+    "true_positives": 743,
+    "false_positives": 940,
+    "true_negatives": 0,
+    "false_negatives": 0,
+    "voting_method": "majority",
+    "voting_threshold": 0.5
+}

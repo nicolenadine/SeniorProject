@@ -1,0 +1,10 @@
+{
+    "training_time": 2366.360769033432,
+    "inference_time": 5.5140221118927,
+    "inference_time_per_sample": 0.0032763054734953655,
+    "model_size_mb": 4.2789764404296875,
+    "parameters_count": 1121708,
+    "flops": 480447828,
+    "trainable_parameters": 1119484,
+    "non_trainable_parameters": 2224
+}

@@ -1,0 +1,11 @@
+runtime: python39
+
+entrypoint: gunicorn app:server
+
+instance_class: F1
+
+handlers:
+  - url: /assets
+    static_dir: assets
+  - url: /.*
+    script: auto

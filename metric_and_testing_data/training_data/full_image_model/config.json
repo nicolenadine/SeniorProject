@@ -1,0 +1,15 @@
+{
+    "data_dir": "Data",
+    "results_dir": "results/full_image_model",
+    "img_size": 256,
+    "batch_size": 32,
+    "epochs": 50,
+    "model_type": "resnet18",
+    "learning_rate": 0.0002,
+    "malware_target": 5000,
+    "save_intermediate": false,
+    "save_frequency": 10,
+    "collect_gradcam": true,
+    "layer_name": null,
+    "timestamp": "20250324_125745"
+}

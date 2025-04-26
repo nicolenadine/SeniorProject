@@ -1,0 +1,200 @@
+{
+    "contingency_table": [
+        [
+            1581,
+            59
+        ],
+        [
+            16,
+            27
+        ]
+    ],
+    "both_correct": 1581,
+    "full_correct_segment_wrong": 59,
+    "full_wrong_segment_correct": 16,
+    "both_wrong": 27,
+    "total_samples": 1683,
+    "mcnemar_statistic": 24.653333333333332,
+    "mcnemar_p_value": 6.862595155314517e-07,
+    "exact_p_value": 6.114156572521501e-07,
+    "is_significant_005": true,
+    "better_model": "full_image",
+    "metrics": {
+        "full_model": {
+            "accuracy": 0.9744503862150921,
+            "precision": 0.972972972972973,
+            "recall": 0.9690444145356663,
+            "f1": 0.9710047201618341
+        },
+        "segment_model": {
+            "accuracy": 0.9489007724301842,
+            "precision": 0.9184713375796179,
+            "recall": 0.9703903095558546,
+            "f1": 0.943717277486911
+        },
+        "difference": {
+            "accuracy": -0.025549613784907832,
+            "precision": -0.054501635393355174,
+            "recall": 0.0013458950201883368,
+            "f1": -0.027287442674923112
+        }
+    },
+    "disagreement_analysis": {
+        "total_disagreements": 75,
+        "full_model_correct": 59,
+        "segment_model_correct": 16,
+        "neither_correct": 0
+    },
+    "family_analysis": {
+        "Benign": {
+            "sample_count": 940,
+            "full_model_accuracy": 0.9787234042553191,
+            "segment_model_accuracy": 0.9319148936170213,
+            "accuracy_diff": -0.04680851063829783,
+            "mcnemar_statistic": 38.72,
+            "mcnemar_p_value": 4.891710270605896e-10,
+            "is_significant": true,
+            "better_model": "full_image"
+        },
+        "Enterak.A": {
+            "sample_count": 44,
+            "full_model_accuracy": 1.0,
+            "segment_model_accuracy": 1.0,
+            "accuracy_diff": 0.0,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "tie"
+        },
+        "Expiro.BK": {
+            "sample_count": 49,
+            "full_model_accuracy": 0.9387755102040817,
+            "segment_model_accuracy": 0.9591836734693877,
+            "accuracy_diff": 0.020408163265306034,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "segment"
+        },
+        "VBInject": {
+            "sample_count": 65,
+            "full_model_accuracy": 0.9384615384615385,
+            "segment_model_accuracy": 0.9538461538461539,
+            "accuracy_diff": 0.015384615384615441,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "segment"
+        },
+        "OnLineGames": {
+            "sample_count": 42,
+            "full_model_accuracy": 0.9523809523809523,
+            "segment_model_accuracy": 0.9761904761904762,
+            "accuracy_diff": 0.023809523809523836,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "segment"
+        },
+        "Obfuscator": {
+            "sample_count": 56,
+            "full_model_accuracy": 0.9821428571428571,
+            "segment_model_accuracy": 0.9642857142857143,
+            "accuracy_diff": -0.017857142857142794,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "full_image"
+        },
+        "Vundo": {
+            "sample_count": 53,
+            "full_model_accuracy": 1.0,
+            "segment_model_accuracy": 1.0,
+            "accuracy_diff": 0.0,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "tie"
+        },
+        "Allaple.A": {
+            "sample_count": 53,
+            "full_model_accuracy": 1.0,
+            "segment_model_accuracy": 1.0,
+            "accuracy_diff": 0.0,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "tie"
+        },
+        "Delf": {
+            "sample_count": 57,
+            "full_model_accuracy": 1.0,
+            "segment_model_accuracy": 1.0,
+            "accuracy_diff": 0.0,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "tie"
+        },
+        "Vobfus": {
+            "sample_count": 71,
+            "full_model_accuracy": 0.971830985915493,
+            "segment_model_accuracy": 0.9436619718309859,
+            "accuracy_diff": -0.028169014084507116,
+            "mcnemar_statistic": 0.16666666666666666,
+            "mcnemar_p_value": 0.6830913983096086,
+            "is_significant": false,
+            "better_model": "full_image"
+        },
+        "Beebone": {
+            "sample_count": 37,
+            "full_model_accuracy": 0.972972972972973,
+            "segment_model_accuracy": 0.972972972972973,
+            "accuracy_diff": 0.0,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "tie"
+        },
+        "Zbot": {
+            "sample_count": 63,
+            "full_model_accuracy": 0.9682539682539683,
+            "segment_model_accuracy": 0.9682539682539683,
+            "accuracy_diff": 0.0,
+            "mcnemar_statistic": 0.5,
+            "mcnemar_p_value": 0.47950012218695337,
+            "is_significant": false,
+            "better_model": "tie"
+        },
+        "Winwebsec": {
+            "sample_count": 62,
+            "full_model_accuracy": 0.9838709677419355,
+            "segment_model_accuracy": 0.9838709677419355,
+            "accuracy_diff": 0.0,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "tie"
+        },
+        "Injector": {
+            "sample_count": 46,
+            "full_model_accuracy": 0.9565217391304348,
+            "segment_model_accuracy": 0.9347826086956522,
+            "accuracy_diff": -0.021739130434782594,
+            "mcnemar_statistic": 0.0,
+            "mcnemar_p_value": 1.0,
+            "is_significant": false,
+            "better_model": "full_image"
+        },
+        "Toga!rfn": {
+            "sample_count": 45,
+            "full_model_accuracy": 0.8888888888888888,
+            "segment_model_accuracy": 0.9333333333333333,
+            "accuracy_diff": 0.04444444444444451,
+            "mcnemar_statistic": 0.25,
+            "mcnemar_p_value": 0.6170750774519739,
+            "is_significant": false,
+            "better_model": "segment"
+        }
+    }
+}

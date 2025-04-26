@@ -1,0 +1,155 @@
+
+/* NAVIGATION BAR STYLING */
+@media (max-width: 768px) {
+    .navbar-title {
+        font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/*   HOME PAGE STYLING   */
+.home-content {
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 40px; /* space below navbar */
+    max-width: 900px;
+}
+
+.paragraph {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.heading {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+
+/*   PREPROCESSING PAGE STYLING  */
+.preprocessing-content {
+    max-width: 1000px;
+    margin: auto;
+    padding-top: 40px;
+}
+
+/* Paragraph alignment */
+.left-align {
+    text-align: left;
+}
+
+.centered {
+    text-align: center;
+}
+
+/* Shared paragraph style */
+@media (max-width: 786px) {
+    .paragraph {
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 20px 0;
+    }
+
+    /* Image placeholder styling */
+    .image-placeholder {
+        width: 90%;
+        height: 300px;
+        background-color: #f0f0f0;
+        border: 1px dashed #ccc;
+        margin: 30px auto;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #666;
+    }
+}
+
+/*   OBJECTIVES PAGE STYLING   */
+.objectives-content {
+    max-width: 1000px;
+    margin: auto;
+    padding-top: 40px;
+}
+
+.references-section {
+    margin-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.citation {
+    font-size: 14px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* ANALYTICS PAGE STYLING */
+.analytics-content {
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 40px;
+}
+
+.radio-group label {
+  margin-right: 1.5rem; /* space between each radio option */
+}
+
+.metric-summary {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: #666;
+  white-space: pre-line;
+}
+
+.plot-label {
+  color: #666;          /* medium grey */
+  font-size: 0.95rem;   /* slightly smaller than paragraph text */
+  font-weight: 500;     /* optional: makes it slightly bolder */
+}
+
+.confusion-summary {
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.90rem;
+  color: #444; /* Medium grey */
+}
+
+.sample-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.tile {
+  position: relative;
+}
+.tile img.base {
+  width: 100%;
+}
+.tile img.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0.4;
+}
+
+
+
+

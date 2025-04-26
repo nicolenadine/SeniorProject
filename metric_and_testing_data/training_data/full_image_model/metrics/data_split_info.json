@@ -1,0 +1,11 @@
+{
+    "train_samples": 7852,
+    "val_samples": 1683,
+    "test_samples": 1683,
+    "malware_train": 3466,
+    "benign_train": 4386,
+    "malware_val": 743,
+    "benign_val": 940,
+    "malware_test": 743,
+    "benign_test": 940
+}

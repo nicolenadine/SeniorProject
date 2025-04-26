@@ -1,0 +1,18 @@
+{
+    "statistic": 0.23826500297088532,
+    "p_value": 2.6155766991913714e-42,
+    "significant": true,
+    "sample_size": 1683,
+    "benign": {
+        "statistic": 0.11595744680851064,
+        "p_value": 6.344471218680561e-06,
+        "significant": true,
+        "sample_size": 940
+    },
+    "malware": {
+        "statistic": 0.522207267833109,
+        "p_value": 7.281863708852474e-93,
+        "significant": true,
+        "sample_size": 743
+    }
+}
