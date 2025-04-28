@@ -2,7 +2,9 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import html, dcc, Input, Output, State
 
-app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.SIMPLEX])
+app = dash.Dash(__name__, use_pages=True, external_stylesheets=[
+    dbc.themes.SIMPLEX], suppress_callback_exceptions=True)
+
 server = app.server
 
 # App title

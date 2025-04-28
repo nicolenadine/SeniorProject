@@ -44,13 +44,12 @@ were made using majority voting across the segment classifiers. However, this st
 failed to generalize. As shown in the confusion matrix, the ensemble classified 
 every sample as malware, achieving perfect recall but extremely low precision and 
 overall accuracy. This indicates that while the model successfully identified all 
-malware cases, it also misclassified every benign sample — a result that undermines 
-its practical utility. The average precision and accuracy were so low that, in a 
-binary classification setting, random guessing would likely have produced 
-better-balanced results. This failure is likely due to the lack of global 
-context within individual segments; each one captured only a limited portion of 
-the full opcode structure, making it difficult for the models to learn distinguishing 
-patterns or make confident, generalizable predictions.
+malware cases, it also misclassified every benign sample.. The average 
+precision and accuracy were low enough that, in a binary classification 
+setting, random guessing would likely have produced better-balanced results. This failure 
+is likely due to the lack of global context within individual segments; each one 
+captured only a limited portion of the full opcode structure, making it difficult 
+for the models to learn distinguishing patterns or make confident, generalizable predictions.
 """
 
 new_segment_paragraph = """
@@ -63,38 +62,40 @@ more informative content. A single CNN model was then trained using only these
 high-variance segments. This approach significantly outperformed the initial 
 segmentation attempt, achieving much stronger accuracy and F1 scores across the 
 5-fold cross-validation. While the performance didn’t surpass that of the full-image 
-model, it demonstrated clear potential—especially considering that minimal 
+model, it demonstrated clear potential, especially considering that minimal 
 hyperparameter tuning was done at this stage. These early results suggest that a 
 variance-guided segmentation strategy is a viable direction for building more 
 efficient or interpretable malware classification pipelines.
 """
 
 segment_analysis_paragraph = """
-The stacked bar char below breaks down the frequency with which each segment was
+The stacked bar chart below breaks down the frequency with which each segment was 
 selected as the highest-variance segment among that class's samples. For the 
-majority of sample types there is relatively similar selection frequency 
-among the four segments. This suggests that the features for these types is 
-likely more evenly distributed throughout the binary.  In contrast, 
-the "Expiro.BK" malware family shows a strong preference for the top-left 
-segment (nearly 75% of selections), suggesting this family may have 
-characteristics or code patterns concentrated in that region. The heatmap 
-confirms these patterns while also showing the corresponding average variance measurements.
-Interestingly, the Benign samples show higher variance values (4725-5376) across
-all segments compared to most malware families. This suggests that there may be
-greater diversity throughout legitimate executables. Meanwhile, the "Vobfus" 
-malware family shows especially high variance in the bottom-left (4688) and 
-bottom-right (4580) segments, suggesting these regions may contain more 
+majority of sample types, there is relatively similar selection frequency among 
+the four segments, indicating that the features for these types are likely more 
+evenly distributed throughout the binary. In contrast, the "Expiro.BK" malware 
+family shows a strong preference for the top-left segment (nearly 75% of selections), 
+pointing to characteristics or code patterns concentrated in that region. The 
+heatmap confirms these patterns while also showing the corresponding average 
+variance measurements. Interestingly, the Benign samples show higher variance 
+values (4725–5376) across all segments compared to most malware families, which 
+implies greater diversity throughout legitimate executables. Meanwhile, the 
+"Vobfus" malware family shows especially high variance in the bottom-left (4688) 
+and bottom-right (4580) segments, hinting that these regions may contain more 
 obfuscation to make detection more challenging. 
 """
 
-mcnemar_paragraph = """
+mcnemar_paragraph_1 = """
 To test whether the models make significantly different predictions, I applied 
 the McNemar test. The McNemar test is a non-parametric statistical method used to 
 compare the performance of two models on the same test dataset, particularly 
 effective when analyzing matched pairs of binary outcomes. The test focuses 
 specifically on the sample cases where one model is correct while the other 
-is incorrect. The test statistic is calculated as χ² = (b-c)²/(b+c), where b 
-represents cases where the first model succeeded but the second failed 
+is incorrect. The test statistic is calculated as:
+"""
+
+mcnemar_paragraph_2 = """
+where b represents cases where the first model succeeded but the second failed 
 (59 samples), and c represents cases where the first model failed but the 
 second succeeded (16 samples). The McNemar test resulted in a test statistic of 
 24.653 and a p-value of 0.000000686 which is significant ( < 0.05). This means 
@@ -114,21 +115,45 @@ the full model misses. These are often malware samples, suggesting that the segm
 model may focus more narrowly on local features.
 """
 
-ks_paragraph = """
-The Kolmogorov-Smirnov (KS) test is another non-parametric test used to 
-determine if two probability distributions differ significantly from each 
-other. For this project, comparing full and segmented malware classification 
-models, the KS test is appropriate because it makes no assumptions about the 
-underlying distribution shape and is sensitive to differences in both location and 
-shape of the distributions. This allows for effective comparison of how the 
-two models assign probability scores to samples.The Full Image Model assigns more 
-consistent low probabilities to benign samples (this is desired behavior).
-Analyzing the probability distribution for malware samples shows the models 
-are making predictions with very different confidence profiles, even when they both 
-label a sample as malware. As shown in the second image below, the segmented model 
-tends to assign consistently higher probabilities to malware predictions than the 
-full image model. While this boosts recall, it likely contributes to higher 
-false positive rates, as seen in the precision gap and McNemar’s test; whereas the 
-full model is more conservative in its probability estimates, explaining its 
-stronger overall precision.
+ks_paragraph_1 = """
+The Kolomogorov-Smirnov (KS) test is an another non-parametric test used to 
+determine if two probability distributions differ significantly. Unlike 
+parametric tests, the KS test: Makes no assumption about the underlying shape of distributions, 
+is sensitive to differences in both location and shape of distributions, 
+and compares the entire probability distribution rather than just central 
+tendencies. The KS test statistic is calculated as the maximum absolute 
+difference between the cumulative distribution function (CDFs) of the two 
+samples: 
 """
+
+ks_paragraph_2 = """
+The null hypothesis states that both samples come from the same 
+distribution. Rejection threshold is set at 0.05. The KS test was performed 
+separately on benign samples and malware samples. The benign sample 
+distribution had a KS test statistic value of 0.1160 and p-value of 6.34e-06. 
+The distribution comparison for benign samples reveals important behavioral 
+differences between the models.
+"""
+
+ks_benign_bullet1 = """
+The full-image model demonstrates more consistent and appropriate behavior by assigning 
+lower malware probability scores to benign samples, showing higher confidence in correct
+benign classification. This is desired behavior. 
+"""
+
+ks_benign_bullet2 = """
+The segmented model shows a flater, wider distribution with a concerning long right tail,
+indicating it frequently assigns higher malware probability to benign 
+samples. This reduced confidence in benign classifications likely 
+explains the higher false positive rates. 
+"""
+
+ks_paragraph_3 = """
+The malware sample distribution had a KS test statistic of 0.5222 and p-value 1.92e-93 
+which is an extremely small p-value. For malware, samples, the models show 
+significantly different confidence profiles. The segmented model demonstrates a strong 
+right-skewed distribution with most predictions clustered at high 
+probabilities (closer to 1), indicating consistently higher confidence in 
+malware classifications. 
+"""
+

@@ -1,37 +1,34 @@
-import json
-from scipy.stats import stats, gaussian_kde
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, dcc
 from dash.dependencies import Input, Output
-from content import analytics_text
-import pandas as pd
+
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
-import requests
 from dash import dash_table
-import matplotlib.pyplot as plt
-import seaborn as sns
-import io
-import base64
+
+from content import analytics_text
+from content.data_sources import *
+
 
 dash.register_page(__name__, path="/analytics", name="Analytics")
 
 # --------------- LOAD METADATA ------------
-gradcam_meta = pd.read_parquet("assets/random_gradcam/random_meta.parquet")
-gradcam_families = sorted(gradcam_meta['family'].unique())
+variance_meta = pd.read_parquet("assets/random_gradcam/random_meta.parquet")
+variance_families = sorted(variance_meta['family'].unique())
 
+# ---  Global variance heatmap overlay dropdown options ---
+variance_family_options = [
+    {"label": fam, "value": fam} for fam in variance_families
+]
 
 # ----------- TOP RIGHT BAR PLOT ----------------
-# Load CSV
-CSV_URL = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/cross_validation_metrics.csv'
-df = pd.read_csv(CSV_URL)
 
 # Melt data
 long_df = pd.melt(
-    df,
+    cv_metrics,
     id_vars=['Model', 'Fold'],
     value_vars=[
         'Class 0 Precision', 'Class 0 Recall', 'Class 0 F1',
@@ -44,7 +41,7 @@ long_df = pd.melt(
 long_df['Class'] = long_df['Metric'].str.extract(r'(Class \d)')
 long_df['BaseMetric'] = long_df['Metric'].str.extract(r'(Precision|Recall|F1)')
 
-extra_rows = df.melt(id_vars=['Model', 'Fold'], value_vars=['Accuracy', 'Weighted F1'], var_name='BaseMetric', value_name='Score')
+extra_rows = cv_metrics.melt(id_vars=['Model', 'Fold'], value_vars=['Accuracy', 'Weighted F1'], var_name='BaseMetric', value_name='Score')
 extra_rows['Class'] = 'Overall'
 long_df = pd.concat([long_df[['Model', 'Fold', 'BaseMetric', 'Score', 'Class']], extra_rows], ignore_index=True)
 
@@ -89,9 +86,7 @@ right_plot_1 = html.Div([
 ])
 
 # ---------- CONFUSION MATRIX --------------
-# Load confusion matrix data from GitHub
-conf_json_url = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/seg1_ensemble_metrics.json'
-conf_data = requests.get(conf_json_url).json()
+# Load confusion matrix data
 conf_matrix = conf_data["confusion_matrix"]
 
 # Convert to numpy for easy formatting
@@ -122,13 +117,8 @@ conf_matrix = dcc.Graph(
 )
 
 # ------ TABLES ----------------
-VARIANCE_CSV = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/segment_variance_data_cleaned.csv'
-PREDICTION_CSV = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/sample_level_predictions_rounded.csv'
 
-variance_df = pd.read_csv(VARIANCE_CSV)
-prediction_df = pd.read_csv(PREDICTION_CSV)
-
-# Rename verbose column names for variance
+# Rename column names for variance
 variance_df.rename(columns={
     'segment_0_variance': 'Top-Left',
     'segment_1_variance': 'Top-Right',
@@ -142,14 +132,16 @@ display_prediction_df = prediction_df.drop(columns=['file_path'])
 
 # ----------- FAMILY VARIANCE & SEGMENT SELECTION PLOTS -------------
 def create_family_variance_and_selection_plots():
-    df = pd.read_csv(VARIANCE_CSV)
-    top_families = df['family'].value_counts().nlargest(10).index.tolist()
+
+    top_families = variance_df['family'].value_counts().nlargest(10).index.tolist()
 
     # Family-wise average variance heatmap
-    family_variances = df[df['family'].isin(top_families)].groupby('family')[
-        ['segment_0_variance', 'segment_1_variance', 'segment_2_variance', 'segment_3_variance']
+    family_variances = variance_df[variance_df['family'].isin(top_families)].groupby('family')[
+        ['Top-Left', 'Top-Right', 'Bottom-Left',
+         'Bottom-Right']
     ].mean().round(0).astype(int)
-    family_variances.columns = ['Top-Left', 'Top-Right', 'Bottom-Left', 'Bottom-Right']
+    family_variances.columns = ['Top-Left', 'Top-Right', 'Bottom-Left',
+                                'Bottom-Right']
 
     fig_heatmap = ff.create_annotated_heatmap(
         z=family_variances.values,
@@ -165,7 +157,7 @@ def create_family_variance_and_selection_plots():
     )
 
     # Segment selection bar chart
-    count_df = df[df['family'].isin(top_families)].groupby(['family', 'selected_segment']).size().unstack(fill_value=0)
+    count_df = variance_df[variance_df['family'].isin(top_families)].groupby(['family', 'selected_segment']).size().unstack(fill_value=0)
     count_df.columns = ['Top-Left', 'Top-Right', 'Bottom-Left', 'Bottom-Right']
     percent_df = count_df.div(count_df.sum(axis=1), axis=0) * 100
 
@@ -188,14 +180,6 @@ def create_family_variance_and_selection_plots():
 
 
 def load_mcnemar_summary():
-    url = 'https://raw.githubusercontent.com/nicolenadine/SeniorProject/refs/heads/main/metric_and_testing_data/mcnemar_comparison_results.json'
-    r = requests.get(url)
-    try:
-        mcnemar_data = r.json()
-    except json.JSONDecodeError as e:
-        print("Failed to decode JSON:", e)
-        print("Raw response:", r.text[:300])
-        raise
 
     # Reorder the matrix to account for Plotly's rendering
     # Plotly renders the first row at the bottom, so we need to flip the order
@@ -255,7 +239,8 @@ mcnemar_fig, mcnemar_summary = load_mcnemar_summary()
 
 layout = html.Div([
     html.H5("Segmentation Approach", className="heading"),
-    html.Div(analytics_text.initial_segment_fail_paragraph, className="paragraph centered", **{"data-aos": "fade-up"}),
+    html.Div(analytics_text.initial_segment_fail_paragraph,
+             className="paragraph left-align", **{"data-aos": "fade-up"}),
     html.Div([
         conf_matrix,
         html.Div([
@@ -273,7 +258,9 @@ layout = html.Div([
     html.Hr(),
 
     dbc.Row([
-        html.Div(analytics_text.new_segment_paragraph, className="paragraph centered", **{"data-aos": "fade-up"}),
+        html.Div(analytics_text.new_segment_paragraph, className="paragraph "
+                                                                 "left-align",
+                 **{"data-aos": "fade-up"}),
     ], className="mb-4"),
 
 
@@ -281,7 +268,7 @@ layout = html.Div([
 
     dbc.Row([
         html.Div(analytics_text.segment_analysis_paragraph,
-                 className="paragraph centered", **{"data-aos": "fade-up"}),
+                 className="paragraph left-align", **{"data-aos": "fade-up"}),
     ], className="mb-4"),
 
     html.Div([
@@ -293,28 +280,42 @@ layout = html.Div([
 
     html.Div([
         dbc.Button(
-            "View Grad-CAM Samples",
-            id="gradcam-collapse-toggle",
+            "View Variance Heatmap Overlay Samples",
+            id="variance-collapse-toggle",
             className="mb-2",
             color="secondary",
             n_clicks=0
         ),
         dbc.Collapse(
             html.Div([
-                html.Div("Select Family:", className="plot-label", style={'marginBottom': '0.5rem'}),
+                html.Div("Select Family:", className="plot-label",
+                         style={'marginBottom': '0.5rem'}),
+
                 dcc.Dropdown(
-                    id="gradcam-family-dd",
-                    options=[{"label": "All", "value": "All"}],  # will be populated by callback
-                    value="All",
+                    id="variance-family-dd",
+                    options=variance_family_options,
+                    value=variance_family_options[0]['value'],
                     clearable=False,
-                    style={"width": "300px", "marginBottom": "1.5rem"}
+                    style={"width": "300px", "marginBottom": "0.5rem"}
                 ),
-                html.Div(id="gradcam-sample-grid", className="sample-grid")
+
+                html.Div(
+                    id="variance-description",
+                    style={
+                        "fontSize": "0.85rem",
+                        "fontStyle": "italic",
+                        "color": "#666",
+                        "marginBottom": "1.5rem",
+                        "textAlign": "center"
+                    }
+                ),
+
+                html.Div(id="variance-sample-grid", className="sample-grid")
             ]),
-            id="gradcam-collapse-container",
+            id="variance-collapse-container",
             is_open=False
         )
-    ]),
+    ], className="mb-4"),
 
 
     html.Div([
@@ -360,27 +361,63 @@ layout = html.Div([
                 md=6),
     ], className="mb-2", style={"padding-bottom": "25px"}),
 
+    html.Hr(),
     html.H5("Model Calibration", className="heading"),
+    html.Hr(),
 
     html.Div(analytics_text.calibration_curve_paragraph,
-             className="paragraph centered",
+             className="paragraph left-align",
              **{"data-aos": "fade-up"}),
 
     html.Div([
         html.Img(
-            src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/calibration_curves.png?raw=true",
+            src=calibration_curves_img,
             style={'width': '100%', 'height': '500px'},
             alt="Benign probability distribution comparison")
         ]),
 
+    # Replace everything from the McNemar test section to the end of your layout
 
     html.Hr(),
     html.H5("McNemar Testing", className="heading"),
     html.Hr(),
 
     html.Div(
-        analytics_text.mcnemar_paragraph,
-        className="paragraph centered",
+        analytics_text.mcnemar_paragraph_1,
+        className="paragraph left-align",
+        **{"data-aos": "fade-up"}
+    ),
+
+    html.Div([
+        dcc.Markdown(
+            r'''
+            $$
+            \chi^2 = \frac{(b-c)^2}{b+c}
+            $$
+            ''',
+            mathjax=True,  # Explicitly enable MathJax
+            style={"textAlign": "center", "margin": "20px 0"}
+        )
+    ]),
+
+    html.Div([
+        dcc.Markdown(
+            r'''
+                    where:
+
+                    b represents cases where the first model succeeded but the second failed (59 samples)
+
+                    c represents cases where the first model failed but the second succeeded (16 samples)
+                    ''',
+            mathjax=True,
+            style={"textAlign": "center", "fontSize": "0.9rem",
+                   "margin": "0 0 20px 0"}
+        )
+    ]),
+
+    html.Div(
+        analytics_text.mcnemar_paragraph_2,
+        className="paragraph left-align",
         **{"data-aos": "fade-up"}
     ),
 
@@ -392,32 +429,102 @@ layout = html.Div([
             mcnemar_summary,
             className="metric-summary",
             style={"textAlign": "right"}
-            # Option 1: simple right text alignment
         )
     ], style={"maxWidth": "800px", "margin": "auto"}),
 
+    # KS Test Section
     html.Hr(),
-    html.H5("Kolmogorov- Smirnov Test", className="heading"),
+    html.H5("Kolmogorov-Smirnov Test", className="heading"),
     html.Hr(),
 
-    html.Div(analytics_text.ks_paragraph, className="paragraph centered", **{"data-aos": "fade-up"}),
+    # First paragraph
+    html.Div(
+        analytics_text.ks_paragraph_1,
+        className="paragraph left-align",
+        **{"data-aos": "fade-up"}
+    ),
+
+    # LaTeX formula
+    html.Div([
+        dcc.Markdown(
+            r'''
+            $$
+            D = \max_x |F_1(x) - F_2(x)|
+            $$
+            ''',
+            mathjax=True,
+            style={"textAlign": "center", "margin": "20px 0"}
+        )
+    ]),
 
     html.Div([
-        dbc.Row([
-            dbc.Col(html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/benign_probability_distribution.png?raw=true",
-                style={'width': '100%', 'height': '500px'},
-                alt="Benign probability distribution comparison"
-            ), xs=12, md=6),
-            dbc.Col(html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/malware_probability_distribution.png?raw=true",
-                style={'width': '100%', 'height': '500px'},
-                alt="Malware probability distribution comparison"
-            ), xs=12, md=6),
-        ], className="mb-4")
-    ], style={"maxWidth": "1100px", "margin": "auto"})
+        dcc.Markdown(
+            r'''
+            Where $F_1(x)$ is the empirical CDF of the first sample and $F_2(x)$ is the empirical CDF of the second sample
+            ''',
+            mathjax=True,
+            style={"textAlign": "center", "fontSize": "0.9rem",
+                   "margin": "0 0 20px 0"}
+        )
+    ]),
 
-], className="analytics-content")
+    # Second paragraph
+    html.Div(
+        analytics_text.ks_paragraph_2,
+        className="paragraph left-align",
+        **{"data-aos": "fade-up"}
+    ),
+
+    # Bullet points for benign observations (text NOT centered within bullets)
+    html.Div([
+        html.Ul([
+            html.Li(
+                analytics_text.ks_benign_bullet1,
+                style={"textAlign": "left"}
+            ),
+            html.Li(
+                analytics_text.ks_benign_bullet2,
+                style={"textAlign": "left"}
+            ),
+        ], style={"marginLeft": "2rem", "marginBottom": "1.5rem"})
+    ], className="paragraph", **{"data-aos": "fade-up"}),
+
+    # Third paragraph
+    html.Div(
+        analytics_text.ks_paragraph_3,
+        className="paragraph left-align",
+        **{"data-aos": "fade-up"}
+    ),
+
+    # Images
+    html.Div([
+        dbc.Row([
+            dbc.Col([
+                html.H6(
+                    "Benign Sample Distribution",
+                    style={"textAlign": "center", "marginBottom": "10px"}
+                ),
+                html.Img(
+                    src=benign_prob_dist_img,
+                    style={'width': '100%', 'height': '500px'},
+                    alt="Benign probability distribution comparison"
+                )
+            ], xs=12, md=6),
+            dbc.Col([
+                html.H6(
+                    "Malware Sample Distribution",
+                    style={"textAlign": "center", "marginBottom": "10px"}
+                ),
+                html.Img(
+                    src=malware_prob_dist_img,
+                    style={'width': '100%', 'height': '500px'},
+                    alt="Malware probability distribution comparison"
+                )
+            ], xs=12, md=6),
+        ], className="mb-4")
+    ])
+], style={"maxWidth": "1100px", "margin": "auto"})
+
 
 
 def update_chart(selected_model, selected_metric):
@@ -509,28 +616,41 @@ def update_table(selected_table):
     )
 
 
-def toggle_gradcam_collapse(n):
+def toggle_variance_collapse(n):
     return n % 2 == 1 if n else False
 
 
-def update_gradcam_samples(selected_family):
-    family_options = [{"label": "All", "value": "All"}] + [
-        {"label": fam, "value": fam} for fam in gradcam_families
-    ]
+def create_variance_tile(base_path, overlay_path):
+    return html.Div([
+        html.Div([
+            html.Img(src=f"/{base_path}", className="base"),
+            html.Img(src=f"/{overlay_path}", className="overlay")
+        ], className="tile-inner")
+    ], className="tile")
 
-    df = gradcam_meta if selected_family == "All" else gradcam_meta.query("family == @selected_family")
-    df = df.sample(min(len(df), 16))
+
+def update_variance_samples(selected_family):
+    df = variance_meta.query("family == @selected_family")  # No more 'All' logic
+    df = df.reset_index(drop=True)
 
     tiles = []
-    for _, row in df.iterrows():
-        tiles.append(html.Div([
-            html.Img(src=f"/{row['full_path'].replace('app/', '')}",
-                     className="base"),
-            html.Img(src=f"/{row['overlay_path'].replace('app/', '')}",
-                     className="overlay")
-        ], className="tile"))
+    for i in range(0, len(df), 2):
+        full_path = df.loc[i, 'full_path'].replace('app/', '')
 
-    return tiles, family_options
+        if '.txt.png' in full_path:
+            idx = full_path.index('.txt.png') + len('.txt.png')
+            base_path = full_path[:idx]
+        else:
+            continue
+
+        overlay_path = base_path.replace('.txt.png', '.txt.png_var.png')
+
+        tiles.append(create_variance_tile(base_path, overlay_path))
+
+        if len(tiles) >= 16:
+            break
+
+    return tiles
 
 
 # ------- CALLBACKS -------------
@@ -553,16 +673,20 @@ dash.get_app().callback(
 )(lambda n: n % 2 == 1 if n else False)
 
 dash.get_app().callback(
-    Output("gradcam-collapse-container", "is_open"),
-    Input("gradcam-collapse-toggle", "n_clicks"),
+    Output("variance-collapse-container", "is_open"),
+    Input("variance-collapse-toggle", "n_clicks"),
     prevent_initial_call=True
-)(toggle_gradcam_collapse)
+)(toggle_variance_collapse)
 
 dash.get_app().callback(
-    Output("gradcam-sample-grid", "children"),
-    Output("gradcam-family-dd", "options"),
-    Input("gradcam-family-dd", "value")
-)(update_gradcam_samples)
+    Output("variance-sample-grid", "children"),
+    Input("variance-family-dd", "value")
+)(update_variance_samples)
+
+dash.get_app().callback(
+    Output("variance-description", "children"),
+    Input("variance-family-dd", "value")
+)(lambda selected_family: f"16 randomly selected samples from {selected_family}, with highest variance segment outlined.")
 
 
 #        dbc.Col(html.Div(right_plot_2, **{"data-aos": "fade-left"}), xs=12, md=6),

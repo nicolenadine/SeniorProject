@@ -33,11 +33,31 @@
     text-align: justify;
 }
 
-.heading {
+h4.heading, .heading {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 20px;
     font-weight: bold;
+}
+
+h5.heading, .heading {
+    text-align: center !important;
+    margin-top: 30px !important;
+    margin-bottom: 20px !important;
+    font-weight: bold !important;
+    font-size: 1.25rem !important;
+    color: #333 !important;
+    padding: 5px 0 !important;
+}
+
+/* subtitle formatting */
+h5.heading::after, .heading::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: #6c757d;
+    margin: 10px auto 0;
 }
 
 
@@ -121,7 +141,7 @@
 .plot-label {
   color: #666;          /* medium grey */
   font-size: 0.95rem;   /* slightly smaller than paragraph text */
-  font-weight: 500;     /* optional: makes it slightly bolder */
+  font-weight: 500;
 }
 
 .confusion-summary {
@@ -136,20 +156,55 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
+
 .tile {
   position: relative;
-}
-.tile img.base {
   width: 100%;
+  padding-top: 100%; /* 1:1 aspect ratio */
 }
-.tile img.overlay {
+
+.tile-inner {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  opacity: 0.4;
+  height: 100%;
 }
 
+.tile-inner img.base {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.tile-inner img.overlay {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0.4; /* Adjust overlay transparency */
+}
+
+/* FINDINGS PAGE */
+.findings-content .subheading {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  color: #084594;
+}
+
+.bulleted-content {
+  margin-left: 1.5rem;
+  padding-left: 0.5rem;
+}
 
 
 

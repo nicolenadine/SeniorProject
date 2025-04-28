@@ -1,8 +1,10 @@
 import dash
-import dash_bootstrap_components as dbc
 from dash import html, dcc
 import plotly.express as px
+
 from content import preprocessing_text
+from content.data_sources import opcode_embeddings_tsne_img, sample_images_img
+
 
 dash.register_page(__name__, path="/preprocessing", name="Preprocessing")
 
@@ -20,15 +22,15 @@ scatter_plot = dcc.Graph(
 
 # Placeholder image
 tsne_image = html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/opcode_embeddings_tsne.png?raw=true",
-                style={'width': '100%', 'height': '700px', "padding-left":
-                       "20px", "padding-top": "25px"},
-                alt="Benign file count by source")
+    src=opcode_embeddings_tsne_img,
+    style={'width': '100%', 'height': '700px', "padding-left":
+        "20px", "padding-top": "25px"},
+    alt="Benign file count by source")
 sample_image = html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/sample_images.png?raw=true",
-                style={'width': '100%', 'height': '375px', "padding-left":
-                       "20px", "padding-top": "25px"},
-                alt="Benign file count by source")
+    src=sample_images_img,
+    style={'width': '100%', 'height': '375px', "padding-left":
+        "20px", "padding-top": "25px"},
+    alt="Benign file count by source")
 
 layout = html.Div([
 
@@ -37,7 +39,8 @@ layout = html.Div([
     html.H5("Opcode Sequence Extraction", className="heading"),
     html.Hr(),
 
-    html.Div(preprocessing_text.opcode_extraction, className="paragraph left-align"),
+    html.Div(preprocessing_text.opcode_extraction,
+             className="paragraph left-align"),
 
     html.Hr(),
 
@@ -63,8 +66,7 @@ layout = html.Div([
     html.Hr(),
 
     html.Div(preprocessing_text.data_sampling, className="paragraph "
-                                                           "left-align")
+                                                         "left-align")
 ],
     style={"maxWidth": "1100px", "margin": "auto"}
 )
-

@@ -3,19 +3,20 @@ import dash_bootstrap_components as dbc
 from dash import html, dcc
 import plotly.express as px
 from content import objectives_text
+from content.data_sources import benign_file_count_img, top_malware_families_img
 
 dash.register_page(__name__, path="/project_objectives", name="Project Objectives")
 
 # --- Placeholder bar charts ---
 benign_bar = html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/benign_file_count.png?raw=true",
+                src= benign_file_count_img,
                 style={'width': '100%', 'height': '350px', "padding-left":
                        "20px", "padding-top": "25px"},
                 alt="Benign file count by source")
 
 
 malware_bar = html.Img(
-                src="https://github.com/nicolenadine/SeniorProject/blob/main/plots/Top_20_malware_families_v077.png?raw=true",
+                src= top_malware_families_img,
                 style={'width': '100%', 'height': '450px', "padding-left":
                        "20px", "padding-top": "25px"},
                 alt="Benign file count by source")
