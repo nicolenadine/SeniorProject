@@ -1,6 +1,6 @@
 # Dash Website 
 
-## Overview
+## Application Directory
 This section of the repository contains files related to the published dash application for this project. The site can be found [here](https://senior-project-457222.wl.r.appspot.com).
 
 ## File Tree
@@ -34,7 +34,7 @@ This section of the repository contains files related to the published dash appl
 
 ```
 
-## Notes
+### Notes
 
 ### data_sources.py 
 Contains links to data sources and images that are externally hosted but used within the app.
@@ -44,5 +44,12 @@ defaults to true inside data_sources.py which causes the application to the GitH
 the app.yaml file sets this environment variable to False so that the deployed application loads
 external sources through the load_data_from_bucket method inside load_data.py
 
+## Metrics and Testing Data Directory 
+Contains csv and json data results from various analysis and model training metrics output. 
 
+## Plots
+Contains static plot .png image files for visualizations not rendered live. 
+
+## Research Code Files 
+All code files used in the preprocessing, image generation, and training for this project. 
 
