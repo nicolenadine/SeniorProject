@@ -3,7 +3,7 @@
 ## Application Directory
 This section of the repository contains files related to the published dash application for this project. The site can be found [here](https://senior-project-457222.wl.r.appspot.com).
 
-## File Tree
+**Application File Tree**
 ```
 .
 ├── .gcloudignore
@@ -34,9 +34,9 @@ This section of the repository contains files related to the published dash appl
 
 ```
 
-### Notes
+**Notes**
 
-### data_sources.py 
+**data_sources.py** 
 Contains links to data sources and images that are externally hosted but used within the app.
 During local development GitHub links are used whereas the deployed version uses Google's Storage Buckets. 
 ```IS_LOCAL = os.getenv('IS_LOCAL', 'true').lower() == 'true'``` 
