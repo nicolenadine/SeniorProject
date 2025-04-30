@@ -29,6 +29,25 @@
 
 ```
 
+## Python Package Requirements
+
+| Package | Version | Documentation |
+|---------|---------|---------------|
+| dash | ~=2.12.1 | [Dash Documentation](https://dash.plotly.com/) |
+| plotly | ~=5.18.0 | [Plotly Documentation](https://plotly.com/python/) |
+| pandas | ~=2.0.3 | [Pandas Documentation](https://pandas.pydata.org/) |
+| Flask | Latest | [Flask Documentation](https://flask.palletsprojects.com/) |
+| gunicorn | Latest | [Gunicorn Documentation](https://gunicorn.org/) |
+| google-cloud-storage | Latest | [Google Cloud Storage Documentation](https://cloud.google.com/python/docs/reference/storage/latest) |
+| dash_bootstrap_components | ==1.4.1 | [Dash Bootstrap Components Documentation](https://dash-bootstrap-components.opensource.faculty.ai/) |
+| numpy | ~=1.24.3 | [NumPy Documentation](https://numpy.org/doc/) |
+| requests | ~=2.32.3 | [Requests Documentation](https://requests.readthedocs.io/) |
+| scipy | ~=1.10.1 | [SciPy Documentation](https://docs.scipy.org/) |
+| matplotlib | ~=3.7.5 | [Matplotlib Documentation](https://matplotlib.org/stable/index.html) |
+| seaborn | ~=0.13.2 | [Seaborn Documentation](https://seaborn.pydata.org/) |
+| pyarrow | ~=14.0.2 | [PyArrow Documentation](https://arrow.apache.org/docs/python/) |
+
+
 **Notes**
 
 **data_sources.py** 
