@@ -27,7 +27,7 @@
 - Hilbert curve visualization
 - Embedding space visualization (UMAP)
 
-## Conversion Scripts (Listed from Basic to Advanced)
+## Conversion Scripts (Multiple approahces based on conversion needs)
 
 ### 2. convert_single.py
 **Purpose**: Basic script for processing files one-by-one sequentially.
