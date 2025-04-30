@@ -5,7 +5,7 @@
 ![Model Comparison Diagram](./plots/pipeline_graphic_part1.png)
 ![Model Comparison Diagram](./plots/pipeline_graphic_part2.png)
 
-## Dash Website 
+## Repository Navigation
 
 ### Application Directory
 This section of the repository contains files related to the published dash application for this project. 
