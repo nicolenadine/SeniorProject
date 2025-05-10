@@ -1,41 +1,24 @@
-# SJSU CS 163
-## Overview
-This repository contains sample codes of dynamic websites based on Dash to demonstrate the website deployment.
 
-## File Tree
-```
-.
-├── note.md
-├── README.md
-├── appengine
-│   ├── app.yaml
-│   ├── app4.py
-│   └── requirements.txt
-├── dashapps
-│   ├── app1.py
-│   ├── app2.py
-│   ├── app3.py
-│   ├── app4.py
-│   ├── app5-multi
-│   │   ├── app5.py
-│   │   └── pages
-│   │       ├── analytics.py
-│   │       └── home.py
-│   ├── app6.py
-│   ├── app7.py
-│   └── app8.py
-└── pythonanywhere
-    ├── README.md
-    ├── app4.py
-    └── secularlionfish_pythonanywhere_com_wsgi.py
-```
+# Malware Classification: Exploring CNN Image Segmentation
 
-### dashapps
-Examples of simple dash apps based on the official document
+## Research Pipeline
+![Model Comparison Diagram](./plots/pipeline_graphic_part1.png)
+![Model Comparison Diagram](./plots/pipeline_graphic_part2.png)
 
-### appengine 
-An example of a dash app for Google App Engine deployment
+## Repository Navigation
 
-### pythonanywhere
-An example of hosting a dash app on [pythonanywhere.com](https://www.pythonanywhere.com/)
+### Application Directory
+This section of the repository contains files related to the published dash application for this project. 
+Includes  ```READme.md``` file with file stucture outline, requirements, and deployment instructions.
+A published version of the site can be found [here](https://senior-project-457222.wl.r.appspot.com).
+
+### Metrics and Testing Data Directory 
+Contains csv and json data results from various analysis and model training metrics output. 
+These files are necessary for application deployment.
+
+### Plots
+Contains static plot .png image files for visualizations not rendered live. 
+
+### Research Code Files 
+All code files used in the preprocessing, image generation, and training for this project. 
 
