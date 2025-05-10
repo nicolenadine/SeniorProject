@@ -8,29 +8,19 @@ from content.data_sources import opcode_embeddings_tsne_img, sample_images_img
 
 dash.register_page(__name__, path="/preprocessing", name="Preprocessing")
 
-# Placeholder bar chart
-bar_chart = dcc.Graph(
-    figure=px.bar(x=["Step A", "Step B"], y=[10, 15]),
-    style={"width": "100%"}
-)
+image_style = {"width": "100%", "paddingLeft": "20px", "paddingTop": "25px"}
 
-# Placeholder scatter plot
-scatter_plot = dcc.Graph(
-    figure=px.scatter(x=[1, 2, 3], y=[4, 1, 6]),
-    style={"width": "100%"}
-)
-
-# Placeholder image
+# T-sne image
 tsne_image = html.Img(
     src=opcode_embeddings_tsne_img,
-    style={'width': '100%', 'height': '700px', "padding-left":
-        "20px", "padding-top": "25px"},
-    alt="Benign file count by source")
+    style={**image_style, 'height': '700px'},
+    alt="t-SNE visualization of opcode embeddings")
+
+# Grid of sample malware visualizations
 sample_image = html.Img(
     src=sample_images_img,
-    style={'width': '100%', 'height': '375px', "padding-left":
-        "20px", "padding-top": "25px"},
-    alt="Benign file count by source")
+    style={**image_style, 'height': '375px'},
+    alt="Sample Hilbert curve visualizations of malware files")
 
 layout = html.Div([
 

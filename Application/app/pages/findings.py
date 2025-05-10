@@ -1,5 +1,6 @@
 import dash
 from dash import html, dcc
+
 from content import findings_text
 
 dash.register_page(__name__, path="/findings", name="Findings")
@@ -10,125 +11,88 @@ layout = html.Div([
         html.H4("Research Findings", className="heading"),
 
         html.Div(findings_text.overview_paragraph,
-                 className="paragraph centered", **{"data-aos": "fade-up"}),
+                 className="paragraph centered"),
 
         # Key Findings Section
         html.Hr(),
         html.H4("Key Findings", className="heading"),
 
         html.Div(findings_text.key_findings_intro,
-                 className="paragraph left-align", **{"data-aos": "fade-up"}),
+                 className="paragraph left-align"),
 
-        # 1. Model Performance - Bulleted Section
-        html.H6(findings_text.model_performance_title, className="subheading",
-                **{"data-aos": "fade-up"}),
+        # Model Performance - Bulleted Section
+        html.H6(findings_text.model_performance_title, className="subheading"),
         html.Div([
             html.Div(
                 dcc.Markdown(findings_text.model_performance_bullet1,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.model_performance_bullet2,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.model_performance_bullet3,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
         ]),
 
-        # 2. Model Calibration - Bulleted Section
-        html.H6(findings_text.calibration_title, className="subheading",
-                **{"data-aos": "fade-up"}),
+        # Model Calibration - Bulleted Section
+        html.H6(findings_text.calibration_title, className="subheading"),
         html.Div([
             html.Div(
                 dcc.Markdown(findings_text.calibration_bullet1,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.calibration_bullet2,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.calibration_bullet3,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content",),
         ]),
 
-        # Placeholder for Visualization
-        # html.Div([
-        #     html.Img(
-        #         src="plot here",
-        #         style={'width': '100%', 'max-height': '400px'},
-        #         alt="alt test here"
-        #     )
-        # ], style={"maxWidth": "800px", "margin": "20px auto"},
-        #     **{"data-aos": "fade-up"}),
-
-        # 3. Segment Analysis - Bulleted Section
-        html.H6(findings_text.segment_analysis_title, className="subheading",
-                **{"data-aos": "fade-up"}),
+        # Segment Analysis - Bulleted Section
+        html.H6(findings_text.segment_analysis_title, className="subheading"),
         html.Div([
             html.Div(
                 dcc.Markdown(findings_text.segment_analysis_bullet1,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.segment_analysis_bullet2,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.segment_analysis_bullet3,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
         ]),
 
-        # 4. Computational Efficiency - Bulleted Section
+        # Computational Efficiency - Bulleted Section
         html.H6(findings_text.computational_efficiency_title,
-                className="subheading", **{"data-aos": "fade-up"}),
+                className="subheading"),
 
         html.Div([
             html.Div(
                 dcc.Markdown(findings_text.computational_efficiency_bullet1,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.computational_efficiency_bullet2,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.computational_efficiency_bullet3,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.computational_efficiency_bullet4,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            )
+                className="bulleted-content")
         ]),
-
-        # Placeholder for Visualization
-        # html.Div([
-        #     html.Img(
-        #         src="plot here",
-        #         style={'width': '100%', 'max-height': '400px'},
-        #         alt="alt test here"
-        #     )
-        # ], style={"maxWidth": "800px", "margin": "20px auto"},
-        #     **{"data-aos": "fade-up"}),
-
 
         # Impact & Next Steps
         html.Hr(),
@@ -137,68 +101,57 @@ layout = html.Div([
 
         # Impact Section - Bulleted
 
-        html.H5(findings_text.impact_title, className="subheading",
-                **{"data-aos": "fade-up"}),
+        html.H5(findings_text.impact_title, className="subheading"),
 
         html.Div([
             html.Div(
                 dcc.Markdown(findings_text.impact_bullet1,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.impact_bullet2,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.impact_bullet3,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.impact_bullet4,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
         ]),
 
         # Next Steps Section - Bulleted
-        html.H6(findings_text.next_steps_title, className="subheading",
-                **{"data-aos": "fade-up"}),
+        html.H6(findings_text.next_steps_title, className="subheading"),
         html.Div([
             html.Div(
                 dcc.Markdown(findings_text.next_steps_bullet1,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.next_steps_bullet2,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.next_steps_bullet3,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.next_steps_bullet4,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            ),
+                className="bulleted-content"),
             html.Div(
                 dcc.Markdown(findings_text.next_steps_bullet5,
                              dangerously_allow_html=True),
-                className="bulleted-content", **{"data-aos": "fade-up"}
-            )
+                className="bulleted-content")
         ]),
 
         # Conclusion
         html.Hr(),
         html.H5("Conclusion", className="heading"),
         html.Div(findings_text.conclusion_paragraph,
-                 className="paragraph centered", **{"data-aos": "fade-up"}),
+                 className="paragraph centered"),
 
     ], className="findings-content")
 ], style={"maxWidth": "1200px", "margin": "0 auto", "padding": "0 20px"})

@@ -2,8 +2,13 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import html, dcc, Input, Output, State
 
-app = dash.Dash(__name__, use_pages=True, external_stylesheets=[
-    dbc.themes.SIMPLEX], suppress_callback_exceptions=True)
+# Initialize the Dash app
+app = dash.Dash(
+    __name__,
+    use_pages=True,
+    external_stylesheets=[dbc.themes.SIMPLEX],
+    suppress_callback_exceptions=True
+)
 
 server = app.server
 
@@ -16,7 +21,8 @@ title = html.Div([
 # Nav links
 nav_links = dbc.Nav([
     dbc.NavItem(dcc.Link("Home", href="/", className="nav-link")),
-    dbc.NavItem(dcc.Link("Objectives", href="/project_objectives", className="nav-link")),
+    dbc.NavItem(dcc.Link("Objectives", href="/project_objectives",
+                         className="nav-link")),
     dbc.NavItem(dcc.Link("Preprocessing", href="/preprocessing",
                          className="nav-link")),
     dbc.NavItem(dcc.Link("Analytics", href="/analytics", className="nav-link")),
@@ -28,12 +34,19 @@ navbar = dbc.Navbar(
     dbc.Container([
         title,
         dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
-        dbc.Collapse(nav_links, id="navbar-collapse", is_open=False, navbar=True),
+        dbc.Collapse(nav_links, id="navbar-collapse", is_open=False,
+                     navbar=True),
     ], fluid=True),
     color="light",
     light=True,
     sticky="top"
 )
+
+# Layout with page container
+app.layout = html.Div([
+    navbar,
+    dash.page_container
+])
 
 
 # Toggle callback
@@ -48,11 +61,11 @@ def toggle_navbar(n, is_open):
     return is_open
 
 
-# Layout with page container
-app.layout = html.Div([
-    navbar,
-    dash.page_container
-])
+from pages import analytics
+
+# Initialize callbacks for the analytics page
+if hasattr(analytics, 'init_callbacks'):
+    analytics.init_callbacks(app)
 
 if __name__ == "__main__":
     app.run(debug=True)

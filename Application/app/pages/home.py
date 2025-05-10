@@ -50,7 +50,7 @@ conf_matrix_plot = dcc.Graph(figure=conf_matrix_fig, style={"maxWidth": "800px",
 layout = html.Div(
     [
         html.H5(" Project Motivation", className="heading"),
-        html.Div(home_text.intro_paragraph, className="paragraph", **{"data-aos": "fade-up"}),
+        html.Div(home_text.intro_paragraph, className="paragraph"),
         html.Hr(),
 
         dcc.Graph(
@@ -59,14 +59,14 @@ layout = html.Div(
         ),
 
 
-        html.Div(home_text.middle_paragraph, className="paragraph", **{"data-aos": "fade-up"}),
+        html.Div(home_text.middle_paragraph, className="paragraph"),
 
         dcc.Graph(
             figure=conf_matrix_fig,
             style={"maxWidth": "800px", "margin": "auto"}
         ),
 
-        html.Div(home_text.final_paragraph, className="paragraph", **{"data-aos": "fade-up"})
+        html.Div(home_text.final_paragraph, className="paragraph")
     ],
     className="home-content"
 )

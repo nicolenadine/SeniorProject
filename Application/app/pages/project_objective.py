@@ -7,18 +7,19 @@ from content.data_sources import benign_file_count_img, top_malware_families_img
 
 dash.register_page(__name__, path="/project_objectives", name="Project Objectives")
 
-# --- Placeholder bar charts ---
+image_style = {"width": "100%", "paddingLeft": "20px", "paddingTop": "25px"}
+
+# Benign sample count bar chart
 benign_bar = html.Img(
                 src= benign_file_count_img,
-                style={'width': '100%', 'height': '350px', "padding-left":
-                       "20px", "padding-top": "25px"},
+                style={**image_style, 'height': '350px'},
                 alt="Benign file count by source")
 
 
+# Malware sample count bar chart
 malware_bar = html.Img(
                 src= top_malware_families_img,
-                style={'width': '100%', 'height': '450px', "padding-left":
-                       "20px", "padding-top": "25px"},
+                style={**image_style, 'height': '450px'},
                 alt="Benign file count by source")
 
 # --- Layout ---
