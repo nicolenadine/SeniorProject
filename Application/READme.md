@@ -1,33 +1,38 @@
 ## Application File Tree
-```
-.
-├── .gcloudignore
-├── app.yaml
-├── requirements.txt
-├── app
-│   ├── app.py
-│   ├── load_data.py
-│   ├── assets
-│   │   ├── mathjax_loader.js
-│   │   ├── pipeline_graphic_part1.png
-│   │   ├── pipeline_graphic_part2.png
-│   │   ├── styles.css
-│   │   └── random_gradcam
-│   ├── content
-│   │   ├── analytics_text.py
-│   │   ├── data_sources.py
-│   │   ├── findings_text.py
-│   │   ├── home_text.py
-│   │   ├── objectives_text.py
-│   │   └── preprocessing_text.py
-│   └── pages
-│       ├── analytics.py
-│       ├── findings.py
-│       ├── home.py
-│       ├── preprocessing.py
-│       └── project_objective.py
-
-```
+app/
+├── app.py                     
+├── load_data.py           
+├── assets/  
+│   ├── random_variance_heatmaps/   #contains a sample of 16 variance heatmaps for each class
+│   └── styles.css
+├── content/           # Defines string variables containing paragraph text to keep layout clean
+│   ├── __init__.py
+│   ├── analytics_text.py
+│   ├── data_sources.py    # defines resource paths for deployed application vs. local (for testing) 
+│   ├── findings_text.py
+│   ├── home_text.py
+│   ├── preprocessing_text.py
+│   └── objectives_text.py
+├── components/              
+│   ├── __init__.py
+│   ├── confusion_matrix.py
+│   ├── data_tables.py
+│   ├── metrics_plots.py
+│   ├── statistical_tests.py
+│   └── variance_plots.py
+├── utils/                     
+│   ├── __init__.py
+│   └── data_processing.py
+├── callbacks/               
+│   ├── __init__.py
+│   └── analytics_callbacks.py
+└── pages/                      
+    ├── __init__.py             
+    ├── analytics.py          
+    ├── findings.py           
+    ├── home.py               
+    ├── preprocessing.py      
+    └── project_objective.py    
 
 **Notes**
 
