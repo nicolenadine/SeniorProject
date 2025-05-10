@@ -1,4 +1,5 @@
 ## Application File Tree
+```
 app/
 ├── app.py                     
 ├── load_data.py           
@@ -33,7 +34,7 @@ app/
     ├── home.py               
     ├── preprocessing.py      
     └── project_objective.py    
-
+```
 **Notes**
 
 **data_sources.py** 
